@@ -11,9 +11,9 @@ def logged(level, name=None, message=None):
     they default to the function's module and name.
     '''
     def decorate(func):
-        logname = name if name else func.__module__
+        logname = name or func.__module__
         log = logging.getLogger(logname)
-        logmsg = message if message else func.__name__
+        logmsg = message or func.__name__
 
         @wraps(func)
         def wrapper(*args, **kwargs):
@@ -26,6 +26,7 @@ def logged(level, name=None, message=None):
         wrapper.log = log
 
         return wrapper
+
     return decorate
 
 # Example use
